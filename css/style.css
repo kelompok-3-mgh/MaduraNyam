@@ -121,3 +121,5 @@ body {
   .ikon { animation: napas 2.6s ease-in-out infinite; }
   .nama, .progres { animation: none; }
 }
+
+.loading.keluar { opacity: 0; transition: opacity 0.35s ease; }
