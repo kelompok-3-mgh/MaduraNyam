@@ -115,7 +115,9 @@ body {
   to   { transform: translateX(250%); }
 }
 
+/* Jika pengaturan "kurangi gerakan" aktif: animasi masuk dihilangkan,
+   tetapi indikator loading (ikon bernapas dan bar bergeser) tetap berjalan */
 @media (prefers-reduced-motion: reduce) {
-  .ikon, .nama, .progres, .progres span { animation: none; }
-  .progres span { width: 60%; }
+  .ikon { animation: napas 2.6s ease-in-out infinite; }
+  .nama, .progres { animation: none; }
 }
