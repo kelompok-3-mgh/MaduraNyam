@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#D9C8F5">
+  <title>Masuk | MaduraNyam</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍢</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="css/halaman.css?v=1">
+</head>
+<body>
+<div class="auth">
+  <aside class="panel-merk" aria-hidden="true">
+    <span class="logo"></span>
+    <h2>Pesan makanan khas Madura dengan mudah.</h2>
+    <p>Daftar akun, pilih menu, lalu pesan dari mana saja.</p>
+  </aside>
+  <main class="panel-form">
+    <div class="isi">
+      <div class="kepala"><span class="logo" aria-hidden="true"></span><span>MaduraNyam</span></div>
+      <h1>Masuk</h1>
+      <p class="sub">Masuk dengan nama pengguna dan kata sandimu.</p>
+      <div id="alert" class="alert" role="alert" hidden></div>
+      <form id="form-login" novalidate>
+        <div class="bidang">
+          <label for="username">Nama pengguna</label>
+          <div class="input"><i class="ik ik-orang"></i><input id="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="contoh: pecinta_sate" aria-describedby="galat-username"></div>
+          <p class="galat" id="galat-username"></p>
+        </div>
+        <div class="bidang">
+          <label for="sandi">Kata sandi</label>
+          <div class="input"><i class="ik ik-kunci"></i><input id="sandi" class="ada-mata" type="password" autocomplete="current-password" placeholder="Masukkan kata sandi" aria-describedby="galat-sandi"><button type="button" class="tombol-mata" aria-label="Tampilkan kata sandi" aria-pressed="false"><i class="ik ik-mata"></i></button></div>
+          <p class="galat" id="galat-sandi"></p>
+        </div>
+        <p class="lupa"><a href="kontak.html">Lupa kata sandi?</a></p>
+        <button id="kirim" class="tombol" type="submit"><span class="pemintal"></span><span>Masuk</span></button>
+      </form>
+      <p class="alih">Belum punya akun? <a href="daftar.html">Daftar sekarang</a></p>
+      <nav class="tautan-bawah" aria-label="Informasi">
+        <a href="ketentuan.html">Ketentuan Layanan</a>
+        <a href="privasi.html">Kebijakan Privasi</a>
+        <a href="kontak.html">Kontak</a>
+      </nav>
+    </div>
+  </main>
+</div>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/halaman.js"></script>
+</body>
+</html>
