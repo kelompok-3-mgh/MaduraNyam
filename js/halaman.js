@@ -94,6 +94,9 @@
   // Daftar
   const fd = $("#form-daftar");
   if (fd) {
+    const setuju = $("#setuju"), kirimDaftar = $("#kirim");
+    const sinkron = () => { kirimDaftar.disabled = !setuju.checked; };
+    sinkron(); setuju.addEventListener("change", sinkron); window.addEventListener("pageshow", sinkron);
     fd.addEventListener("submit", async (e) => {
       e.preventDefault(); kotakPesan("");
       const u = normal($("#username").value), s = $("#sandi").value, k = $("#konfirmasi").value;
