@@ -1,0 +1,90 @@
+:root {
+  --merah: #D7261E;        /* merah cabai */
+  --merah-gelap: #C71F18;  /* garis loreng latar */
+  --putih: #FFFFFF;
+  --bambu: #F0CE7E;        /* tusuk sate */
+  --bakar-1: #B8662F;      /* daging sate: bagian terang */
+  --bakar-2: #7A3B18;
+  --bakar-3: #4A2410;      /* daging sate: bagian gosong */
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: "Bricolage Grotesque", "Arial Black", system-ui, sans-serif;
+  background: var(--merah);
+}
+
+/* Latar loreng merah khas Madura */
+.loading {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.25rem;
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--putih);
+  background: repeating-linear-gradient(
+    90deg,
+    var(--merah) 0 2.5rem,
+    var(--merah-gelap) 2.5rem 5rem
+  );
+}
+
+.nama {
+  font-size: clamp(2.5rem, 12vw, 4.75rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+/* Sate: potongan daging muncul satu per satu di tusuk */
+.sate {
+  position: relative;
+  display: flex;
+  gap: 0.2rem;
+  padding: 0 1.25rem;
+}
+
+.sate::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 0.3rem;
+  margin-top: -0.15rem;
+  border-radius: 0.15rem;
+  background: var(--bambu);
+}
+
+.sate span {
+  position: relative;
+  width: 2.6rem;
+  height: 2.4rem;
+  border-radius: 46% 54% 50% 50% / 56% 44% 56% 44%;
+  background: radial-gradient(circle at 35% 30%, var(--bakar-1), var(--bakar-2) 60%, var(--bakar-3));
+  opacity: 0;
+  animation: tusuk 2.4s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 0.3s);
+}
+
+@keyframes tusuk {
+  0%   { opacity: 0; transform: translateY(-1.4rem) rotate(var(--r)) scale(0.5); }
+  18%  { opacity: 1; transform: translateY(0) rotate(var(--r)) scale(1); }
+  80%  { opacity: 1; transform: translateY(0) rotate(var(--r)) scale(1); }
+  100% { opacity: 0; transform: translateY(0) rotate(var(--r)) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sate span {
+    animation: none;
+    opacity: 1;
+    transform: rotate(var(--r));
+  }
+}
