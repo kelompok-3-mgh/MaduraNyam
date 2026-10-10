@@ -75,6 +75,8 @@
       $("#username").value = baru; $("#sandi").focus();
       toast("Akun berhasil dibuat. Silakan masuk.");
     }
+    // Sudah punya sesi masuk: langsung ke dashboard
+    if (auth) { const batal = auth.onAuthStateChanged((u) => { batal(); if (u) location.replace(DASHBOARD); }); }
     fl.addEventListener("submit", async (e) => {
       e.preventDefault(); kotakPesan("");
       const u = normal($("#username").value), s = $("#sandi").value;
