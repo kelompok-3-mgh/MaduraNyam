@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#D9C8F5">
+  <title>Keranjang | MaduraNyam</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍢</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="css/halaman.css?v=2">
+  <link rel="stylesheet" href="css/dashboard.css?v=3">
+</head>
+<body class="menunggu">
+  <div class="awal" id="awal" role="status" aria-label="Memuat"><span></span></div>
+
+  <div class="app-shell">
+    <header class="bar bar-menu">
+      <button id="kembali" class="kembali" type="button" aria-label="Kembali ke halaman sebelumnya"><i class="ik ik-kembali" aria-hidden="true"></i>Kembali</button>
+      <h1 class="judul-bar">Keranjang</h1>
+    </header>
+
+    <main class="app">
+      <p class="hasil" id="jumlah-item" aria-live="polite"></p>
+      <div class="daftar-keranjang" id="daftar"></div>
+
+      <div class="keranjang-kosong" id="kosong" hidden>
+        <i class="ik ik-keranjang" aria-hidden="true"></i>
+        <h2>Keranjangmu masih kosong</h2>
+        <p>Pilih menu favoritmu, lalu tambahkan ke keranjang.</p>
+        <a class="tombol-tautan" href="menu.html">Lihat menu</a>
+      </div>
+
+      <section class="ringkasan" id="ringkasan" aria-label="Ringkasan keranjang" hidden>
+        <div class="baris-total">
+          <span>Total (<span id="total-item">0</span> item)</span>
+          <strong class="total" id="total">Rp 0</strong>
+        </div>
+        <button id="pesan" class="tombol" type="button">Lanjut ke pemesanan</button>
+        <button id="kosongkan" class="kosongkan" type="button">Kosongkan keranjang</button>
+      </section>
+    </main>
+
+    <nav class="nav-bawah" aria-label="Navigasi utama">
+      <button type="button" data-ke="dashboard.html"><i class="ik ik-beranda" aria-hidden="true"></i>Beranda</button>
+      <button type="button" data-ke="menu.html"><i class="ik ik-menu" aria-hidden="true"></i>Menu</button>
+      <button type="button" id="nav-keranjang" aria-current="page"><i class="ik ik-keranjang" aria-hidden="true"></i>Keranjang</button>
+      <button type="button" data-nama="Pesanan"><i class="ik ik-pesanan" aria-hidden="true"></i>Pesanan</button>
+    </nav>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/umum.js?v=2"></script>
+  <script src="js/keranjang.js"></script>
+</body>
+</html>
