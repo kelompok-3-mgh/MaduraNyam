@@ -55,3 +55,13 @@ button:focus-visible{outline:3px solid rgba(109,63,209,.4);outline-offset:2px}
 .nav-bawah .ik{width:1.4rem;height:1.4rem}
 
 @media(prefers-reduced-motion:reduce){.chip,.tambah,.profil .ik{transition:none}}
+
+/* Halaman Menu */
+.ik-cari{--i:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E")}
+.bar-menu{gap:1rem}
+.judul-bar{font-size:1.3rem}
+.cari{margin:1rem 0 .5rem}
+.hasil{margin:.25rem 0 .9rem;font-size:.9rem;color:var(--teks2)}
+.kosong-menu{padding:2.5rem 1rem;text-align:center;color:var(--teks2)}
+.judul-baris{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin:1.25rem 0 .9rem}
+.judul-baris .judul-bagian{margin:0}
