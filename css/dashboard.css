@@ -65,3 +65,31 @@ button:focus-visible{outline:3px solid rgba(109,63,209,.4);outline-offset:2px}
 .kosong-menu{padding:2.5rem 1rem;text-align:center;color:var(--teks2)}
 .judul-baris{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin:1.25rem 0 .9rem}
 .judul-baris .judul-bagian{margin:0}
+
+/* Keranjang */
+.ik-sampah{--i:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 6h18'/%3E%3Cpath d='m19 6-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6'/%3E%3Cpath d='M10 11v6M14 11v6'/%3E%3Cpath d='M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2'/%3E%3C/svg%3E")}
+.nav-bawah button{position:relative}
+.badge{position:absolute;top:.2rem;left:calc(50% + .45rem);min-width:1.15rem;height:1.15rem;padding:0 .3rem;display:grid;place-items:center;border-radius:999px;background:var(--ungu);color:#fff;font-size:.68rem;font-weight:700;line-height:1}
+.daftar-keranjang{display:flex;flex-direction:column;gap:.75rem}
+.baris-item{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.8rem;align-items:start;padding:.8rem;border:1px solid var(--garis);border-radius:1.1rem;background:#fff}
+.gambar-kecil{width:3.5rem;height:3.5rem;display:grid;place-items:center;border-radius:.8rem;background:var(--muda);font-size:1.9rem}
+.baris-item h3{font-size:1rem;line-height:1.3}
+.harga-satuan{font-size:.85rem;color:var(--teks2)}
+.detail .jumlah{display:inline-flex;align-items:center;gap:.25rem;margin-top:.5rem;padding:.15rem;border:1.5px solid var(--garis);border-radius:999px}
+.jumlah button{width:2rem;height:2rem;border:0;border-radius:50%;background:var(--muda);color:var(--ungu2);font-size:1.15rem;font-weight:700;line-height:1;cursor:pointer}
+.jumlah button:hover{background:var(--lilac)}
+.jumlah output{min-width:1.7rem;text-align:center;font-weight:700}
+.sisi{display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;align-self:stretch;gap:.5rem}
+.subtotal{font-weight:700}
+.hapus{width:2.25rem;height:2.25rem;display:grid;place-items:center;border:0;border-radius:.6rem;background:transparent;color:var(--galat);cursor:pointer}
+.hapus:hover{background:#FDECEC}
+.ringkasan{position:sticky;bottom:calc(5.75rem + env(safe-area-inset-bottom,0px));margin-top:1.25rem;padding:1rem;border:1px solid var(--garis);border-radius:1.1rem;background:#fff;box-shadow:0 .5rem 1.25rem rgba(52,32,92,.12)}
+.baris-total{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-bottom:.75rem}
+.total{font:800 1.4rem "Bricolage Grotesque",system-ui,sans-serif}
+.ringkasan .tombol{margin-top:0}
+.kosongkan{display:block;margin:.75rem auto 0;border:0;background:transparent;color:var(--teks2);font-size:.9rem;font-weight:600;text-decoration:underline;text-underline-offset:.2em;cursor:pointer}
+.keranjang-kosong{display:flex;flex-direction:column;align-items:center;gap:.75rem;padding:3rem 1rem;text-align:center;color:var(--teks2)}
+.keranjang-kosong .ik{width:3.5rem;height:3.5rem;color:#8B6FD6}
+.keranjang-kosong h2{font-size:1.4rem;color:var(--tinta)}
+.tombol-tautan{display:inline-flex;align-items:center;justify-content:center;height:3rem;margin-top:.5rem;padding:0 1.5rem;border-radius:.9rem;background:var(--ungu);color:#fff;font-weight:700;text-decoration:none}
+.tombol-tautan:hover{background:var(--ungu2)}
