@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="css/halaman.css?v=2">
-  <link rel="stylesheet" href="css/dashboard.css?v=1">
+  <link rel="stylesheet" href="css/dashboard.css?v=2">
 </head>
 <body class="menunggu">
   <div class="awal" id="awal" role="status" aria-label="Memuat"><span></span></div>
@@ -38,13 +38,13 @@
         <p>Mau makan apa hari ini?</p>
       </section>
       <div class="kategori" id="kategori" role="group" aria-label="Kategori menu"></div>
-      <h2 class="judul-bagian">Menu populer</h2>
+      <div class="judul-baris"><h2 class="judul-bagian">Menu populer</h2><a href="menu.html">Lihat semua</a></div>
       <div class="menu-grid" id="menu"></div>
     </main>
 
     <nav class="nav-bawah" aria-label="Navigasi utama">
       <button type="button" aria-current="page"><i class="ik ik-beranda" aria-hidden="true"></i>Beranda</button>
-      <button type="button" data-nama="Menu"><i class="ik ik-menu" aria-hidden="true"></i>Menu</button>
+      <button type="button" data-ke="menu.html"><i class="ik ik-menu" aria-hidden="true"></i>Menu</button>
       <button type="button" data-nama="Keranjang"><i class="ik ik-keranjang" aria-hidden="true"></i>Keranjang</button>
       <button type="button" data-nama="Pesanan"><i class="ik ik-pesanan" aria-hidden="true"></i>Pesanan</button>
     </nav>
@@ -54,6 +54,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="js/firebase-config.js"></script>
   <script src="js/data-menu.js"></script>
+  <script src="js/umum.js"></script>
   <script src="js/dashboard.js"></script>
 </body>
 </html>
