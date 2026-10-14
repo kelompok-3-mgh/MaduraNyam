@@ -1,0 +1,42 @@
+/* Halaman Pesanan (memakai variabel dan komponen dari halaman.css dan dashboard.css) */
+
+/* Ringkasan item pada pesanan baru */
+.item-ringkas{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.8rem;align-items:center;padding:.6rem .8rem;border:1px solid var(--garis);border-radius:1.1rem;background:#fff}
+.item-ringkas .gambar-kecil{width:2.75rem;height:2.75rem;font-size:1.5rem}
+.item-ringkas h3{font-size:.95rem;line-height:1.3}
+.item-ringkas p{font-size:.82rem;color:var(--teks2)}
+
+/* Form pesanan baru */
+.form-pesan{margin-top:1.25rem}
+.metode{min-width:0;margin-bottom:1.1rem;border:0}
+.metode legend{margin-bottom:.5rem;padding:0;font-size:.9rem;font-weight:600}
+.opsi{display:flex;flex-wrap:wrap;gap:.5rem}
+.pilihan{position:relative}
+.pilihan input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.pilihan span{display:inline-flex;align-items:center;height:2.5rem;padding:0 1.1rem;border:1.5px solid var(--garis);border-radius:999px;background:#fff;font-weight:600;transition:background .15s,color .15s}
+.pilihan input:checked+span{background:var(--ungu);border-color:var(--ungu);color:#fff}
+.pilihan input:focus-visible+span{outline:3px solid rgba(109,63,209,.4);outline-offset:2px}
+.catatan{width:100%;min-height:5rem;padding:.8rem 1rem;border:1.5px solid var(--garis);border-radius:.9rem;background:#fff;font:inherit;resize:vertical;outline:none;transition:border-color .15s,box-shadow .15s}
+.catatan:focus{border-color:var(--ungu);box-shadow:0 0 0 4px rgba(109,63,209,.16)}
+.catatan::placeholder{color:#8A82A0}
+.catatan-kecil{margin-top:.75rem;font-size:.8rem;text-align:center;color:var(--teks2)}
+
+/* Riwayat */
+.daftar-pesanan{display:flex;flex-direction:column;gap:.75rem}
+.pesanan{padding:1rem;border:1px solid var(--garis);border-radius:1.1rem;background:#fff}
+.pesanan-atas{display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem}
+.pesanan-atas h3{font-size:1rem}
+.waktu{font-size:.82rem;color:var(--teks2)}
+.status{flex:none;padding:.2rem .7rem;border-radius:999px;background:var(--muda);color:var(--ungu2);font-size:.78rem;font-weight:700}
+.status-selesai{background:#E3F4E9;color:var(--hijau)}
+.status-dibatalkan{background:#FDECEC;color:var(--galat)}
+.pesanan ul{list-style:none;margin:.8rem 0;padding:.8rem 0;border-top:1px dashed var(--garis);border-bottom:1px dashed var(--garis)}
+.pesanan li{display:flex;justify-content:space-between;gap:1rem;padding:.15rem 0;font-size:.92rem}
+.pesanan-bawah{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.meta{font-size:.85rem;color:var(--teks2)}
+.total-pesanan{font:800 1.15rem "Bricolage Grotesque",system-ui,sans-serif}
+.catatan-pesanan{margin-top:.6rem;font-size:.85rem;font-style:italic;color:var(--teks2);overflow-wrap:anywhere}
+.batal{height:2.5rem;margin-top:.8rem;padding:0 1.1rem;border:1.5px solid var(--garis);border-radius:.8rem;background:#fff;color:var(--galat);font-weight:600;cursor:pointer}
+.batal:hover{background:#FDECEC}
+
+@media(prefers-reduced-motion:reduce){.pilihan span,.catatan{transition:none}}
