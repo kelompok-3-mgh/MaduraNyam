@@ -40,3 +40,10 @@
 .batal:hover{background:#FDECEC}
 
 @media(prefers-reduced-motion:reduce){.pilihan span,.catatan{transition:none}}
+
+/* Aksi pada kartu pesanan (pelanggan dan admin) */
+.aksi{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.8rem}
+.aksi .batal{margin-top:0}
+.ulang{height:2.5rem;padding:0 1.1rem;border:0;border-radius:.8rem;background:var(--ungu);color:#fff;font-weight:600;cursor:pointer}
+.ulang:hover{background:var(--ungu2)}
+.pemesan{margin-top:.15rem;font-size:.85rem;font-weight:600}
