@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#D9C8F5">
+  <title>Pesanan | MaduraNyam</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍢</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="css/halaman.css?v=2">
+  <link rel="stylesheet" href="css/dashboard.css?v=3">
+  <link rel="stylesheet" href="css/pesanan.css">
+</head>
+<body class="menunggu">
+  <div class="awal" id="awal" role="status" aria-label="Memuat"><span></span></div>
+
+  <div class="app-shell">
+    <header class="bar bar-menu">
+      <button id="kembali" class="kembali" type="button" aria-label="Kembali ke halaman sebelumnya"><i class="ik ik-kembali" aria-hidden="true"></i>Kembali</button>
+      <h1 class="judul-bar">Pesanan</h1>
+    </header>
+
+    <main class="app">
+      <div class="kategori" id="tab" role="group" aria-label="Bagian pesanan">
+        <button class="chip" type="button" data-tab="baru" aria-pressed="false">Pesanan baru</button>
+        <button class="chip" type="button" data-tab="riwayat" aria-pressed="true">Riwayat</button>
+      </div>
+
+      <!-- Pesanan baru: dibuat dari isi keranjang -->
+      <section id="bagian-baru" hidden>
+        <div class="daftar-keranjang" id="ringkas"></div>
+
+        <div class="keranjang-kosong" id="kosong-baru" hidden>
+          <i class="ik ik-keranjang" aria-hidden="true"></i>
+          <h2>Belum ada yang dipesan</h2>
+          <p>Tambahkan menu ke keranjang dulu, lalu buat pesanan.</p>
+          <a class="tombol-tautan" href="menu.html">Lihat menu</a>
+        </div>
+
+        <form id="form-pesan" class="form-pesan" novalidate hidden>
+          <fieldset class="metode">
+            <legend>Cara menerima pesanan</legend>
+            <div class="opsi">
+              <label class="pilihan"><input type="radio" name="metode" value="Makan di tempat" checked><span>Makan di tempat</span></label>
+              <label class="pilihan"><input type="radio" name="metode" value="Bawa pulang"><span>Bawa pulang</span></label>
+            </div>
+          </fieldset>
+          <div class="bidang">
+            <label for="catatan">Catatan (opsional)</label>
+            <textarea id="catatan" class="catatan" maxlength="140" rows="3" placeholder="Contoh: sambal dipisah"></textarea>
+          </div>
+          <section class="ringkasan" aria-label="Ringkasan pesanan">
+            <div class="baris-total">
+              <span>Total (<span id="total-item">0</span> item)</span>
+              <strong class="total" id="total">Rp 0</strong>
+            </div>
+            <button id="kirim" class="tombol" type="submit"><span class="pemintal"></span><span>Buat pesanan</span></button>
+            <p class="catatan-kecil">Aplikasi ini simulasi tugas kuliah. Tidak ada pembayaran atau pengiriman sungguhan.</p>
+          </section>
+        </form>
+      </section>
+
+      <!-- Riwayat pesanan -->
+      <section id="bagian-riwayat">
+        <p class="hasil" id="jumlah-pesanan" aria-live="polite"></p>
+        <div class="daftar-pesanan" id="riwayat"></div>
+        <div class="keranjang-kosong" id="kosong-riwayat" hidden>
+          <i class="ik ik-pesanan" aria-hidden="true"></i>
+          <h2>Belum ada pesanan</h2>
+          <p>Pesanan yang sudah kamu buat akan muncul di sini.</p>
+          <a class="tombol-tautan" href="menu.html">Lihat menu</a>
+        </div>
+      </section>
+    </main>
+
+    <nav class="nav-bawah" aria-label="Navigasi utama">
+      <button type="button" data-ke="dashboard.html"><i class="ik ik-beranda" aria-hidden="true"></i>Beranda</button>
+      <button type="button" data-ke="menu.html"><i class="ik ik-menu" aria-hidden="true"></i>Menu</button>
+      <button type="button" id="nav-keranjang" data-ke="keranjang.html"><i class="ik ik-keranjang" aria-hidden="true"></i>Keranjang</button>
+      <button type="button" aria-current="page"><i class="ik ik-pesanan" aria-hidden="true"></i>Pesanan</button>
+    </nav>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/umum.js?v=3"></script>
+  <script src="js/pesanan.js"></script>
+</body>
+</html>
