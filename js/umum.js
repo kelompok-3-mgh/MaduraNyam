@@ -97,6 +97,60 @@ const MN = (function () {
     }, (e) => { galatKeranjang(e); if (saatBerubah) saatBerubah([]); });
   }
 
+  // ---------- Pesanan (koleksi "pesanan", satu dokumen per pesanan) ----------
+  const koleksiPesanan = () => basis() ? basis().collection("pesanan") : null;
+  const waktuMs = (p) => (p.dibuatPada && p.dibuatPada.toMillis) ? p.dibuatPada.toMillis() : 0;
+
+  function galatPesanan(e) {
+    console.error("[MaduraNyam] Pesanan:", e);
+    toast(e && e.code === "permission-denied"
+      ? "Akses ditolak. Perbarui aturan Firestore untuk pesanan."
+      : "Gagal memproses pesanan. Coba lagi.");
+  }
+
+  // Simpan pesanan baru dan kosongkan keranjang dalam satu langkah (batch)
+  async function buatPesanan(items, opsi) {
+    const col = koleksiPesanan(), keranjang = refKeranjang();
+    if (!col || !keranjang) { toast("Database belum terhubung."); return false; }
+    if (!items.length) return false;
+    const F = firebase.firestore.FieldValue;
+    const batch = basis().batch();
+    batch.set(col.doc(), {
+      uid: uidAktif,
+      item: items.map((x) => ({ id: x.id, nama: x.nama, harga: x.harga, ikon: x.ikon, jumlah: x.jumlah })),
+      jumlahItem: items.reduce((n, x) => n + x.jumlah, 0),
+      total: items.reduce((n, x) => n + x.harga * x.jumlah, 0),
+      metode: opsi.metode,
+      catatan: opsi.catatan,
+      status: "diproses",
+      dibuatPada: F.serverTimestamp()
+    });
+    batch.set(keranjang, { item: {}, diperbarui: F.serverTimestamp() });
+    try { await batch.commit(); return true; }
+    catch (e) { galatPesanan(e); return false; }
+  }
+
+  // Pantau riwayat pesanan milik pengguna (urut terbaru di atas)
+  function pantauPesanan(saatBerubah) {
+    const col = koleksiPesanan();
+    if (!col || !uidAktif) return null;
+    return col.where("uid", "==", uidAktif).onSnapshot((snap) => {
+      const daftar = snap.docs
+        .map((d) => Object.assign({ id: d.id }, d.data({ serverTimestamps: "estimate" })))
+        .sort((a, b) => waktuMs(b) - waktuMs(a));
+      saatBerubah(daftar);
+    }, (e) => { galatPesanan(e); saatBerubah([]); });
+  }
+
+  async function batalkanPesanan(id) {
+    const col = koleksiPesanan();
+    if (!col) return;
+    try {
+      await col.doc(id).update({ status: "dibatalkan", diperbarui: firebase.firestore.FieldValue.serverTimestamp() });
+      toast("Pesanan dibatalkan.");
+    } catch (e) { galatPesanan(e); }
+  }
+
   // ---------- Halaman ----------
   // Gerbang login: hanya pengguna yang sudah masuk yang boleh melihat halaman
   function gerbang(saatMasuk, saatKeranjang) {
@@ -151,5 +205,5 @@ const MN = (function () {
     });
   }
 
-  return { el, rupiah, toast, gerbang, kartu, chipKategori, navBawah, ubahJumlah, hapusItem, kosongkan };
+  return { el, rupiah, toast, gerbang, kartu, chipKategori, navBawah, ubahJumlah, hapusItem, kosongkan, buatPesanan, pantauPesanan, batalkanPesanan };
 })();

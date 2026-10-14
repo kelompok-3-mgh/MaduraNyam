@@ -48,7 +48,7 @@
     if (aktif) { const n = document.querySelector('[data-fokus="' + aktif + '"]'); if (n) n.focus(); }
   }
 
-  $("#pesan").addEventListener("click", () => MN.toast("Pemesanan dibuat di tahap berikutnya."));
+  $("#pesan").addEventListener("click", () => { location.href = "pesanan.html#baru"; });
   $("#kosongkan").addEventListener("click", () => { if (confirm("Kosongkan semua isi keranjang?")) MN.kosongkan(); });
   MN.navBawah();
 })();
