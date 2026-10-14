@@ -3,6 +3,7 @@ const MN = (function () {
   "use strict";
 
   let uidAktif = null;
+  let namaAktif = "";
   let berlangganan = null;
 
   const authAktif = () =>
@@ -117,6 +118,7 @@ const MN = (function () {
     const batch = basis().batch();
     batch.set(col.doc(), {
       uid: uidAktif,
+      pemesan: namaAktif,
       item: items.map((x) => ({ id: x.id, nama: x.nama, harga: x.harga, ikon: x.ikon, jumlah: x.jumlah })),
       jumlahItem: items.reduce((n, x) => n + x.jumlah, 0),
       total: items.reduce((n, x) => n + x.harga * x.jumlah, 0),
@@ -131,10 +133,10 @@ const MN = (function () {
   }
 
   // Pantau riwayat pesanan milik pengguna (urut terbaru di atas)
-  function pantauPesanan(saatBerubah) {
+  function pantauPesanan(saatBerubah, semua) {
     const col = koleksiPesanan();
     if (!col || !uidAktif) return null;
-    return col.where("uid", "==", uidAktif).onSnapshot((snap) => {
+    return (semua ? col : col.where("uid", "==", uidAktif)).onSnapshot((snap) => {
       const daftar = snap.docs
         .map((d) => Object.assign({ id: d.id }, d.data({ serverTimestamps: "estimate" })))
         .sort((a, b) => waktuMs(b) - waktuMs(a));
@@ -151,6 +153,31 @@ const MN = (function () {
     } catch (e) { galatPesanan(e); }
   }
 
+  // ---------- Pesan lagi & admin ----------
+  // Masukkan semua item pesanan lama ke keranjang
+  async function pesanLagi(items) {
+    const ref = refKeranjang();
+    if (!ref) { toast("Database belum terhubung."); return false; }
+    const F = firebase.firestore.FieldValue, item = {};
+    items.forEach((x) => { item[x.id] = { nama: x.nama, harga: x.harga, ikon: x.ikon, jumlah: F.increment(x.jumlah) }; });
+    try { await ref.set({ item, diperbarui: F.serverTimestamp() }, { merge: true }); return true; }
+    catch (e) { galatKeranjang(e); return false; }
+  }
+
+  // Admin = pengguna yang punya dokumen di koleksi "admin" (id dokumen = UID, dibuat manual di Firebase Console)
+  async function cekAdmin() {
+    if (!basis() || !uidAktif) return false;
+    try { return (await basis().collection("admin").doc(uidAktif).get()).exists; }
+    catch (e) { return false; }
+  }
+
+  async function ubahStatus(id, status) {
+    const col = koleksiPesanan();
+    if (!col) return;
+    try { await col.doc(id).update({ status, diperbarui: firebase.firestore.FieldValue.serverTimestamp() }); }
+    catch (e) { galatPesanan(e); }
+  }
+
   // ---------- Halaman ----------
   // Gerbang login: hanya pengguna yang sudah masuk yang boleh melihat halaman
   function gerbang(saatMasuk, saatKeranjang) {
@@ -159,6 +186,7 @@ const MN = (function () {
     auth.onAuthStateChanged((user) => {
       if (!user) { location.replace("login.html"); return; }
       uidAktif = user.uid;
+      namaAktif = user.displayName || (user.email || "").split("@")[0] || "pengguna";
       saatMasuk(user);
       if (!berlangganan) berlangganan = pantauKeranjang(saatKeranjang);
       document.body.classList.remove("menunggu");
@@ -205,5 +233,5 @@ const MN = (function () {
     });
   }
 
-  return { el, rupiah, toast, gerbang, kartu, chipKategori, navBawah, ubahJumlah, hapusItem, kosongkan, buatPesanan, pantauPesanan, batalkanPesanan };
+  return { el, rupiah, toast, gerbang, kartu, chipKategori, navBawah, ubahJumlah, hapusItem, kosongkan, buatPesanan, pantauPesanan, batalkanPesanan, pesanLagi, cekAdmin, ubahStatus };
 })();

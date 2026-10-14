@@ -68,11 +68,17 @@
 
       const kartu = el("article", "pesanan"); kartu.append(atas, isi, bawah);
       if (p.catatan) kartu.append(el("p", "catatan-pesanan", "Catatan: " + p.catatan));
+      const aksi = el("div", "aksi");
       if (p.status === "diproses") {
         const batal = el("button", "batal", "Batalkan pesanan"); batal.type = "button";
         batal.addEventListener("click", () => { if (confirm("Batalkan pesanan " + kode + "?")) MN.batalkanPesanan(p.id); });
-        kartu.append(batal);
+        aksi.append(batal);
       }
+      const ulang = el("button", "ulang", "Pesan lagi"); ulang.type = "button";
+      ulang.addEventListener("click", async () => {
+        if (await MN.pesanLagi(p.item || [])) { MN.toast("Menu dimasukkan ke keranjang."); pilihTab("baru"); }
+      });
+      aksi.append(ulang); kartu.append(aksi);
       wadah.append(kartu);
     });
   }
