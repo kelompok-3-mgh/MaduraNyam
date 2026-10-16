@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="css/halaman.css?v=2">
   <link rel="stylesheet" href="css/dashboard.css?v=3">
+  <link rel="stylesheet" href="css/kelola.css">
 </head>
 <body class="menunggu">
   <div class="awal" id="awal" role="status" aria-label="Memuat"><span></span></div>
@@ -19,6 +20,7 @@
     <header class="bar bar-menu">
       <button id="kembali" class="kembali" type="button" aria-label="Kembali ke halaman sebelumnya"><i class="ik ik-kembali" aria-hidden="true"></i>Kembali</button>
       <h1 class="judul-bar">Menu</h1>
+      <button id="kelola" class="kembali kelola" type="button" aria-pressed="false">Kelola</button>
     </header>
 
     <main class="app">
@@ -26,11 +28,43 @@
         <i class="ik ik-cari" aria-hidden="true"></i>
         <input id="cari" type="search" placeholder="Cari menu, misalnya sate" aria-label="Cari menu" autocomplete="off">
       </div>
+      <button id="tambah-produk" class="tombol-tautan tambah-produk" type="button" hidden>+ Tambah produk</button>
       <div class="kategori" id="kategori" role="group" aria-label="Kategori menu"></div>
       <p class="hasil" id="hasil" aria-live="polite"></p>
       <div class="menu-grid" id="menu"></div>
       <p class="kosong-menu" id="kosong" hidden>Menu tidak ditemukan. Coba kata kunci atau kategori lain.</p>
+      <div class="keranjang-kosong" id="menu-belum" hidden>
+        <i class="ik ik-menu" aria-hidden="true"></i>
+        <h2>Menu masih kosong</h2>
+        <p>Tekan Kelola untuk menambah produk, atau isi dengan menu contoh.</p>
+        <button id="isi-contoh" class="tombol-tautan" type="button">Isi menu contoh</button>
+      </div>
     </main>
+
+    <datalist id="daftar-kategori"></datalist>
+    <dialog id="dialog-produk" class="dialog" aria-labelledby="judul-dialog">
+      <form id="form-produk" novalidate>
+        <h2 id="judul-dialog">Tambah produk</h2>
+        <div class="foto-baris">
+          <div class="foto-pratinjau" id="pratinjau" aria-hidden="true">🍽️</div>
+          <div class="foto-aksi">
+            <input id="foto" class="sr-saja" type="file" accept="image/*">
+            <label class="mini" for="foto">Pilih foto</label>
+            <button id="hapus-foto" class="mini bahaya" type="button" hidden>Hapus foto</button>
+          </div>
+        </div>
+        <p class="galat" id="galat-foto"></p>
+        <div class="bidang"><label for="nama">Nama produk</label><input id="nama" class="isian" type="text" maxlength="40" autocomplete="off"><p class="galat" id="galat-nama"></p></div>
+        <div class="bidang"><label for="kategori-produk">Kategori</label><input id="kategori-produk" class="isian" type="text" maxlength="20" list="daftar-kategori" autocomplete="off" placeholder="Contoh: Sate"><p class="galat" id="galat-kategori"></p></div>
+        <div class="bidang"><label for="harga">Harga (Rp)</label><input id="harga" class="isian" type="number" inputmode="numeric" min="1" step="1" placeholder="20000"><p class="galat" id="galat-harga"></p></div>
+        <div class="bidang"><label for="info">Deskripsi singkat</label><input id="info" class="isian" type="text" maxlength="60" autocomplete="off"></div>
+        <div class="bidang"><label for="ikon">Emoji (tampil jika tanpa foto)</label><input id="ikon" class="isian" type="text" maxlength="8" value="🍽️"></div>
+        <div class="dialog-aksi">
+          <button id="batal-produk" class="tombol-batal" type="button">Batal</button>
+          <button id="simpan-produk" class="tombol" type="submit"><span class="pemintal"></span><span>Simpan</span></button>
+        </div>
+      </form>
+    </dialog>
 
     <nav class="nav-bawah" aria-label="Navigasi utama">
       <button type="button" data-ke="dashboard.html"><i class="ik ik-beranda" aria-hidden="true"></i>Beranda</button>
@@ -45,7 +79,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script src="js/firebase-config.js"></script>
   <script src="js/data-menu.js"></script>
-  <script src="js/umum.js?v=4"></script>
-  <script src="js/menu.js?v=2"></script>
+  <script src="js/umum.js?v=5"></script>
+  <script src="js/menu.js?v=3"></script>
 </body>
 </html>
