@@ -1,0 +1,37 @@
+/* Foto produk, mode Kelola menu, dan dialog tambah/ubah produk */
+.kartu .gambar{overflow:hidden}
+.kartu .gambar img{display:block;width:100%;height:100%;object-fit:cover}
+
+.kelola{margin-left:auto}
+.kelola[aria-pressed="true"]{background:var(--ungu);border-color:var(--ungu);color:#fff}
+button.tombol-tautan{border:0;font:inherit;font-weight:700;cursor:pointer}
+.tambah-produk{margin:.25rem 0 .5rem}
+
+.aksi-kartu{display:flex;gap:.4rem;margin-top:.6rem}
+.aksi-kartu .mini{flex:1}
+.mini{display:inline-flex;align-items:center;justify-content:center;height:2.25rem;padding:0 .9rem;border:1.5px solid var(--garis);border-radius:.7rem;background:#fff;font:inherit;font-size:.85rem;font-weight:600;cursor:pointer}
+.mini:hover{background:var(--muda)}
+.mini.bahaya{color:var(--galat)}
+.mini.bahaya:hover{background:#FDECEC}
+
+.dialog{width:min(calc(100% - 2rem),26rem);max-height:calc(100dvh - 2rem);margin:auto;padding:1.25rem;border:0;border-radius:1.25rem;background:#fff;color:var(--tinta);overflow-y:auto;box-shadow:0 1.5rem 3rem rgba(52,32,92,.3)}
+.dialog::backdrop{background:rgba(52,32,92,.45)}
+.dialog h2{margin-bottom:1rem;font-size:1.4rem}
+.dialog .bidang{margin-bottom:.9rem}
+.isian{width:100%;height:3rem;padding:0 1rem;border:1.5px solid var(--garis);border-radius:.9rem;background:#fff;font:inherit;outline:none;transition:border-color .15s,box-shadow .15s}
+.isian:focus{border-color:var(--ungu);box-shadow:0 0 0 4px rgba(109,63,209,.16)}
+.isian::placeholder{color:#8A82A0}
+
+.foto-baris{display:flex;align-items:center;gap:1rem;margin-bottom:.5rem}
+.foto-pratinjau{flex:none;width:5rem;height:5rem;display:grid;place-items:center;overflow:hidden;border-radius:.9rem;background:var(--muda);font-size:2.4rem}
+.foto-pratinjau img{width:100%;height:100%;object-fit:cover}
+.foto-aksi{display:flex;flex-wrap:wrap;gap:.5rem}
+.sr-saja{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}
+.sr-saja:focus-visible+.mini{outline:3px solid rgba(109,63,209,.4);outline-offset:2px}
+
+.dialog-aksi{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:1rem}
+.dialog-aksi .tombol{margin-top:0}
+.tombol-batal{height:3.25rem;border:1.5px solid var(--garis);border-radius:.9rem;background:#fff;font-weight:700;cursor:pointer}
+.tombol-batal:hover{background:var(--muda)}
+
+@media(prefers-reduced-motion:reduce){.isian{transition:none}}
