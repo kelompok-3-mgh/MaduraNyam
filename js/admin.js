@@ -1,4 +1,4 @@
-// MaduraNyam - halaman Admin: lihat semua pesanan dan ubah statusnya. Hanya untuk akun yang terdaftar di koleksi "admin".
+// MaduraNyam - halaman Admin: lihat semua pesanan dan ubah statusnya. Bisa dipakai semua pengguna yang sudah masuk.
 (function () {
   "use strict";
   const $ = (s) => document.querySelector(s);
@@ -6,14 +6,8 @@
   const LANJUT = { diproses: "dimasak", dimasak: "siap", siap: "selesai" };
   let semua = [], saring = "Semua", pantau = null;
 
-  const auth = MN.gerbang(async () => {
-    if (pantau) return;
-    if (!(await MN.cekAdmin())) {
-      MN.toast("Halaman ini hanya untuk admin.");
-      setTimeout(() => location.replace("dashboard.html"), 1400);
-      return;
-    }
-    pantau = MN.pantauPesanan((daftar) => { semua = daftar; gambar(); }, true);
+  const auth = MN.gerbang(() => {
+    if (!pantau) pantau = MN.pantauPesanan((daftar) => { semua = daftar; gambar(); }, true);
   }, () => {});
   if (!auth) return;
 
