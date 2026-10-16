@@ -47,3 +47,4 @@
 .ulang{height:2.5rem;padding:0 1.1rem;border:0;border-radius:.8rem;background:var(--ungu);color:#fff;font-weight:600;cursor:pointer}
 .ulang:hover{background:var(--ungu2)}
 .pemesan{margin-top:.15rem;font-size:.85rem;font-weight:600}
+.tautan-admin{display:block;margin:.1rem 0 .9rem;font-size:.85rem;text-align:right}
