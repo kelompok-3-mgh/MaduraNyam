@@ -41,7 +41,7 @@ const MN = (function () {
     const F = firebase.firestore.FieldValue;
     try {
       await ref.set({
-        item: { [idMenu(m)]: { nama: m.nama, harga: m.harga, ikon: m.ikon, jumlah: F.increment(1) } },
+        item: { [idMenu(m)]: { nama: m.nama, harga: m.harga, ikon: m.ikon || "🍽️", jumlah: F.increment(1) } },
         diperbarui: F.serverTimestamp()
       }, { merge: true });
       toast(m.nama + " masuk keranjang.");
@@ -178,6 +178,49 @@ const MN = (function () {
     catch (e) { galatPesanan(e); }
   }
 
+  // ---------- Menu (koleksi "menu", satu dokumen per produk) ----------
+  function galatMenu(e) {
+    console.error("[MaduraNyam] Menu:", e);
+    toast(e && e.code === "permission-denied"
+      ? "Akses ditolak. Perbarui aturan Firestore untuk menu."
+      : "Gagal memproses menu. Coba lagi.");
+  }
+
+  function pantauMenu(saatBerubah) {
+    if (!basis()) return null;
+    return basis().collection("menu").onSnapshot((snap) => {
+      const daftar = snap.docs.map((d) => Object.assign({ id: d.id }, d.data()))
+        .sort((a, b) => (a.urutan || 0) - (b.urutan || 0) || (a.nama || "").localeCompare(b.nama || "", "id"));
+      saatBerubah(daftar);
+    }, (e) => { galatMenu(e); saatBerubah([]); });
+  }
+
+  // id kosong = produk baru; id terisi = ubah produk
+  async function simpanProduk(id, data) {
+    if (!basis()) { toast("Database belum terhubung."); return false; }
+    const F = firebase.firestore.FieldValue, col = basis().collection("menu");
+    try {
+      if (id) await col.doc(id).update(Object.assign({}, data, { diperbarui: F.serverTimestamp() }));
+      else await col.add(Object.assign({}, data, { urutan: Date.now(), dibuatPada: F.serverTimestamp() }));
+      return true;
+    } catch (e) { galatMenu(e); return false; }
+  }
+
+  async function hapusProduk(id) {
+    if (!basis()) return false;
+    try { await basis().collection("menu").doc(id).delete(); return true; }
+    catch (e) { galatMenu(e); return false; }
+  }
+
+  // Isi menu awal dari data-menu.js (id dokumen sama dengan id lama di keranjang)
+  async function isiMenuContoh() {
+    if (!basis() || typeof MENU_CONTOH === "undefined") return false;
+    const F = firebase.firestore.FieldValue, batch = basis().batch();
+    MENU_CONTOH.forEach((m, i) => batch.set(basis().collection("menu").doc(idMenu(m)),
+      Object.assign({}, m, { foto: "", urutan: i, dibuatPada: F.serverTimestamp() })));
+    try { await batch.commit(); return true; } catch (e) { galatMenu(e); return false; }
+  }
+
   // ---------- Halaman ----------
   // Gerbang login: hanya pengguna yang sudah masuk yang boleh melihat halaman
   function gerbang(saatMasuk, saatKeranjang) {
@@ -197,15 +240,24 @@ const MN = (function () {
   }
 
   // Kartu menu
-  function kartu(m) {
+  function kartu(m, aksi) {
     const k = el("article", "kartu"), baris = el("div", "baris"), tambah = el("button", "tambah", "+");
     tambah.type = "button";
     tambah.setAttribute("aria-label", "Tambah " + m.nama + " ke keranjang");
     tambah.addEventListener("click", () => tambahKeKeranjang(m));
-    const gambar = el("div", "gambar", m.ikon);
+    const gambar = el("div", "gambar");
+    if (m.foto) { const img = el("img"); img.src = m.foto; img.alt = ""; img.loading = "lazy"; gambar.append(img); }
+    else gambar.textContent = m.ikon || "🍽️";
     gambar.setAttribute("aria-hidden", "true");
     baris.append(el("span", "harga", rupiah(m.harga)), tambah);
     k.append(gambar, el("h3", "", m.nama), el("p", "info", m.info), baris);
+    if (aksi) {
+      const w = el("div", "aksi-kartu"), ubah = el("button", "mini", "Ubah"), hapus = el("button", "mini bahaya", "Hapus");
+      ubah.type = hapus.type = "button";
+      ubah.setAttribute("aria-label", "Ubah " + m.nama); hapus.setAttribute("aria-label", "Hapus " + m.nama);
+      ubah.addEventListener("click", () => aksi.ubah(m)); hapus.addEventListener("click", () => aksi.hapus(m));
+      w.append(ubah, hapus); k.append(w);
+    }
     return k;
   }
 
@@ -233,5 +285,5 @@ const MN = (function () {
     });
   }
 
-  return { el, rupiah, toast, gerbang, kartu, chipKategori, navBawah, ubahJumlah, hapusItem, kosongkan, buatPesanan, pantauPesanan, batalkanPesanan, pesanLagi, cekAdmin, ubahStatus };
+  return { el, rupiah, toast, gerbang, kartu, chipKategori, navBawah, ubahJumlah, hapusItem, kosongkan, buatPesanan, pantauPesanan, batalkanPesanan, pesanLagi, cekAdmin, ubahStatus, pantauMenu, simpanProduk, hapusProduk, isiMenuContoh };
 })();

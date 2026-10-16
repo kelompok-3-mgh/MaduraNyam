@@ -3,6 +3,8 @@
   "use strict";
   const $ = (s) => document.querySelector(s);
 
+  let menu = [], aktif = "Semua", pantauM = null;
+
   // Gerbang login + profil (nama = nama pengguna yang dibuat saat daftar)
   const auth = MN.gerbang((user) => {
     const nama = user.displayName || (user.email || "").split("@")[0] || "pengguna";
@@ -10,6 +12,7 @@
     $("#nama-penuh").textContent = nama;
     $("#avatar").textContent = nama.charAt(0);
     $("#profil").setAttribute("aria-label", "Profil " + nama);
+    if (!pantauM) pantauM = MN.pantauMenu((daftar) => { menu = daftar; bangunKategori(); gambarMenu(); });
   });
   if (!auth) return;
 
@@ -29,13 +32,18 @@
   const jam = new Date().getHours();
   $("#salam").textContent = jam < 11 ? "Selamat pagi" : jam < 15 ? "Selamat siang" : jam < 18 ? "Selamat sore" : "Selamat malam";
 
-  // Kategori + menu populer
-  let aktif = "Semua";
+  // Kategori + menu populer (data dari database)
+  function bangunKategori() {
+    const daftar = ["Semua", ...new Set(menu.map((m) => m.kategori))];
+    if (!daftar.includes(aktif)) aktif = "Semua";
+    const w = $("#kategori"); w.replaceChildren();
+    MN.chipKategori(w, daftar, (k) => { aktif = k; gambarMenu(); });
+    w.querySelectorAll(".chip").forEach((c) => c.setAttribute("aria-pressed", c.textContent === aktif));
+  }
   function gambarMenu() {
     const grid = $("#menu"); grid.replaceChildren();
-    MENU_CONTOH.filter((m) => aktif === "Semua" || m.kategori === aktif).forEach((m) => grid.append(MN.kartu(m)));
+    menu.filter((m) => aktif === "Semua" || m.kategori === aktif).forEach((m) => grid.append(MN.kartu(m)));
+    if (!menu.length) grid.append(MN.el("p", "kosong-menu", "Menu belum tersedia."));
   }
-  MN.chipKategori($("#kategori"), ["Semua", ...new Set(MENU_CONTOH.map((m) => m.kategori))], (k) => { aktif = k; gambarMenu(); });
-  gambarMenu();
   MN.navBawah();
 })();
